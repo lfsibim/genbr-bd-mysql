@@ -2,7 +2,7 @@ create database db_generation_game_online;
 use db_generation_game_online;
 
 create table tb_classes(
-id bigint auto_increment not null,
+id bigint auto_increment,
 nome varchar(50) not null,
 faccao enum('Horda', 'Aliança') not null,
 primary key (id)
@@ -19,7 +19,7 @@ values ("Guerreiro", "Horda"),
 select * from tb_classes;
 
 create table tb_personagens(
-id bigint auto_increment not null,
+id bigint auto_increment,
 nome varchar(100) not null,
 ataque int not null,
 defesa int not null,
@@ -50,7 +50,8 @@ select * from tb_personagens where nome like "%c%";
 
 select nome, ataque, defesa, vida, agilidade, inteligencia, sorte, tb_classes.tipo, tb_classes.faccao
 from tb_personagens inner join tb_classes
-on tb_personagens.classes_id = tb_classes.id order by nome ASC;
+on tb_personagens.classes_id = tb_classes.id
+order by nome ASC;
 
 select nome, ataque, defesa, vida, agilidade, inteligencia, sorte, tb_classes.tipo, tb_classes.faccao
 from tb_personagens inner join tb_classes

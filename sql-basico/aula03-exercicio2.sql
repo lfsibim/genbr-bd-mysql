@@ -1,59 +1,61 @@
-create database db_pizzaria_legal;
-use db_pizzaria_legal;
+CREATE DATABASE db_pizzaria_legal;
+USE db_pizzaria_legal;
 
-create table tb_categorias(
-id bigint auto_increment,
-tipo varchar(100) not null,
-descricao varchar(255) not null,
-primary key (id)
+CREATE TABLE tb_categorias(
+id BIGINT AUTO_INCREMENT,
+tipo VARCHAR(100) NOT NULL,
+descricao VARCHAR(255) NOT NULL,
+PRIMARY KEY (id)
 );
 
-create table tb_pizzas(
-id bigint auto_increment,
-sabor varchar(150) not null,
-tamanho enum('Broto', 'Média', 'Grande', 'Não se aplica') default 'Não se aplica',
-borda enum('Normal', 'Recheada', 'Não se aplica') default 'Não se aplica',
-adicional varchar(255) default 'Não se aplica',
-preco decimal(5,2) not null,
-categoria_id bigint,
-primary key (id),
-foreign key (categoria_id) references tb_categorias(id)
+CREATE TABLE tb_pizzas(
+id BIGINT AUTO_INCREMENT,
+sabor VARCHAR(150) NOT NULL,
+tamanho ENUM('Broto', 'Média', 'Grande', 'Não se aplica') DEFAULT 'Não se aplica',
+borda ENUM('Normal', 'Recheada', 'Não se aplica') DEFAULT 'Não se aplica',
+adicional VARCHAR(255) DEFAULT 'Não se aplica',
+preco DECIMAL(5,2) NOT NULL,
+categoria_id BIGINT,
+PRIMARY KEY (id),
+FOREIGN KEY (categoria_id) REFERENCES tb_categorias(id)
 );
 
-insert into tb_categorias(tipo, descricao)
-values ("Salgada", "Ingredientes de qualidade e selecionados a dedo"),
+INSERT INTO tb_categorias(tipo, descricao)
+VALUES ("Salgada", "Ingredientes de qualidade e selecionados a dedo"),
 ("Doce", "Ingredientes de qualidade e selecionados a dedo"),
 ("Vegetariana", "Ingredientes de qualidade e selecionados a dedo"),
 ("Fermentação natural", "Ingredientes de qualidade e selecionados a dedo"),
 ("Esfiha", "Ingredientes de qualidade e selecionados a dedo");
 
-select * from tb_categorias;
+SELECT * FROM tb_categorias;
 
-insert into tb_pizzas(sabor, tamanho, borda, adicional, preco, categoria_id)
-values ("Portuguesa", "Média", "Recheada", default, 70.99, 1),
+INSERT INTO tb_pizzas(sabor, tamanho, borda, adicional, preco, categoria_id)
+VALUES ("Portuguesa", "Média", "Recheada", DEFAULT, 70.99, 1),
 ("Calabresa", "Grande", "Normal", "Bacon", 90, 1),
-("Chocolate", "Broto", "Normal", default, 50, 2),
-("Shimeji", "Média", "Normal", default, 65.99, 3),
-("Carne", default, default, default, 19.50, 5),
-("Queijo", default, default, default, 19.50, 5),
-("Palmito", "Broto", "Recheada", default, 35, 3),
-("Romeu e Julieta", "Grande", "Recheada", default, 72, 4);
+("Chocolate", "Broto", "Normal", DEFAULT, 50, 2),
+("Shimeji", "Média", "Normal", DEFAULT, 65.99, 3),
+("Carne", DEFAULT, DEFAULT, DEFAULT, 19.50, 5),
+("Queijo", DEFAULT, DEFAULT, DEFAULT, 19.50, 5),
+("Palmito", "Broto", "Recheada", DEFAULT, 35, 3),
+("Romeu e Julieta", "Grande", "Recheada", DEFAULT, 72, 4);
 
-select * from tb_pizzas;
+SELECT * FROM tb_pizzas;
 
-select * from tb_pizzas where preco > 45;
+SELECT * FROM tb_pizzas WHERE preco > 45;
 
-select * from tb_pizzas where preco between 50 and 100;
+SELECT * FROM tb_pizzas WHERE preco BETWEEN 50 AND 100;
 
-select * from tb_pizzas where sabor like "%m%";
+SELECT * FROM tb_pizzas WHERE sabor LIKE "%m%";
 
-select * from tb_pizzas inner join tb_categorias
-on tb_pizzas.categoria_id = tb_categorias.id
-order by tb_pizzas.sabor desc;
+SELECT sabor, tamanho, borda, adicional, preco, tb_categorias.tipo AS categoria, tb_categorias.descricao
+FROM tb_pizzas INNER JOIN tb_categorias
+ON tb_pizzas.categoria_id = tb_categorias.id
+ORDER BY tb_pizzas.sabor DESC;
 
-select * from tb_pizzas inner join tb_categorias
-on tb_pizzas.categoria_id = tb_categorias.id
-where tb_categorias.tipo = "Salgada";
+SELECT sabor, tamanho, borda, adicional, preco, tb_categorias.tipo AS categoria, tb_categorias.descricao 
+FROM tb_pizzas INNER JOIN tb_categorias
+ON tb_pizzas.categoria_id = tb_categorias.id
+WHERE tb_categorias.tipo = "Salgada";
 
 
 

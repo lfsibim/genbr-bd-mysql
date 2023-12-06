@@ -1,34 +1,34 @@
-create database db_cidade_dos_vegetais;
-use db_cidade_dos_vegetais;
+CREATE DATABASE db_cidade_dos_vegetais;
+USE db_cidade_dos_vegetais;
 
-create table tb_categorias(
-id bigint auto_increment,
-tipo varchar(100) not null,
-descricao varchar(255) not null,
-primary key (id)
+CREATE TABLE tb_categorias(
+id BIGINT AUTO_INCREMENT,
+tipo VARCHAR(100) NOT NULL,
+descricao VARCHAR(255) NOT NULL,
+PRIMARY KEY (id)
 );
 
-create table tb_produtos(
-id bigint auto_increment,
-nome varchar(150) not null,
-dataValidade date not null,
-preco decimal(5,2) not null,
-categorias_id bigint,
-primary key (id),
-foreign key (categorias_id) references tb_categorias(id)
+CREATE TABLE tb_produtos(
+id BIGINT AUTO_INCREMENT,
+nome VARCHAR(150) NOT NULL,
+dataValidade DATE NOT NULL,
+preco DECIMAL(5,2) NOT NULL,
+categorias_id BIGINT,
+PRIMARY KEY (id),
+FOREIGN KEY (categorias_id) REFERENCES tb_categorias(id)
 );
 
-insert into tb_categorias(tipo, descricao)
-values ("Frutas", "Frescas e deliciosas"),
+INSERT INTO tb_categorias(tipo, descricao)
+VALUES ("Frutas", "Frescas e deliciosas"),
 ("Legumes", "Frescas e deliciosas"),
 ("Cereais", "Selecionados a dedo"),
 ("Temperos", "Perfumados e deliciosos"),
 ("Bebidas", "Naturais");
 
-select * from tb_categorias;
+SELECT * FROM tb_categorias;
 
-insert into tb_produtos(nome, dataValidade, preco, categorias_id)
-values ("Banana", "2023-12-08", 10.00, 1),
+INSERT INTO tb_produtos(nome, dataValidade, preco, categorias_id)
+VALUES ("Banana", "2023-12-08", 10.00, 1),
 ("Brócolis", "2023-12-15", 20.00, 2),
 ("Suco de Laranja", "2023-12-6", 12.00, 5),
 ("Maçã", "2023-12-08", 15.00, 1),
@@ -38,22 +38,24 @@ values ("Banana", "2023-12-08", 10.00, 1),
 ("Aveia", "2024-08-21", 55.00, 3),
 ("Sal do Himalaia", "2025-01-05", 92.00, 4);
 
-select * from tb_produtos;
+SELECT * FROM tb_produtos;
 
-select * from tb_produtos where preco > 50;
+SELECT * FROM tb_produtos WHERE preco > 50;
 
-select * from tb_produtos where preco between 50 and 150;
+SELECT * FROM tb_produtos WHERE preco BETWEEN 50 AND 150;
 
-select * from tb_produtos where nome like "%c%";
+SELECT * FROM tb_produtos WHERE nome LIKE "%c%";
 
-select * from tb_produtos inner join tb_categorias
-on tb_produtos.categorias_id = tb_categorias.id
-order by tb_categorias.tipo asc;
+SELECT nome, dataValidade, preco, tb_categorias.tipo AS categoria, tb_categorias.descricao
+FROM tb_produtos INNER JOIN tb_categorias
+ON tb_produtos.categorias_id = tb_categorias.id
+ORDER BY tb_categorias.tipo ASC;
 
-select * from tb_produtos inner join tb_categorias
-on tb_produtos.categorias_id = tb_categorias.id
-where tb_categorias.tipo = "Cereais"
-order by nome ASC;
+SELECT nome, dataValidade, preco, tb_categorias.tipo AS categoria, tb_categorias.descricao
+FROM tb_produtos INNER JOIN tb_categorias
+ON tb_produtos.categorias_id = tb_categorias.id
+WHERE tb_categorias.tipo = "Cereais"
+ORDER BY nome ASC;
 
 
 
